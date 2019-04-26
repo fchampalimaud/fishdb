@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Zebrafish
+
+
+@admin.register(Zebrafish)
+class ZebrafishAdmin(admin.ModelAdmin):
+    readonly_fields = ["created", "modified"]
