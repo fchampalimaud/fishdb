@@ -1,5 +1,6 @@
 from django.apps import AppConfig
 
 
-class FishdbConfig(AppConfig):
+class FishDBConfig(AppConfig):
     name = "fishdb"
+    verbose_name = "FishDB"
