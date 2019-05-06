@@ -3,17 +3,20 @@ from pyforms_web.widgets.django import ModelAdminWidget
 from pyforms_web.widgets.django import ModelFormWidget
 
 from fishdb.models import Zebrafish
-
+from .permissions_list import PermissionsListApp
 
 class FishForm(ModelFormWidget):
 
     FIELDSETS = [
         ("line_name", "line_number", "line_type", "line_type_other"),
         ("background", "genotype", "phenotype", "origin"),
-        ("availability", "mta"),
+        ("availability", "mta", 'lab'),
         "link",
         "comments",
+        'PermissionsListApp'
     ]
+    
+    INLINES = [PermissionsListApp]
 
     LAYOUT_POSITION = conf.ORQUESTRA_NEW_TAB
 
