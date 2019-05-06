@@ -34,5 +34,5 @@ setup(
     include_package_data=True,
     install_requires=["django~=2.2.0", "django-model-utils~=3.1.0"],
     extras_require={"dev": ["black==19.3b0"]},
-    python_requires="~=3.7",
+    python_requires=">3.6",
 )
