@@ -21,6 +21,7 @@ class ZebrafishBase(models.Model):
         ("none", "Unavailable"),
     )
 
+    public      = models.BooleanField('Public', default=False)
     created     = models.DateTimeField('Created', auto_now_add=True)
     modified    = models.DateTimeField('Updated', auto_now=True)
     background = models.CharField(max_length=20)

@@ -8,6 +8,7 @@ from .permissions_list import PermissionsListApp
 class FishForm(ModelFormWidget):
 
     FIELDSETS = [
+        'public',
         ("line_name", "line_number", "line_type", "line_type_other"),
         ("background", "genotype", "phenotype", "origin"),
         ("availability", "mta", 'lab'),
