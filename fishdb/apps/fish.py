@@ -84,5 +84,5 @@ class FishApp(ModelAdminWidget):
 
     LAYOUT_POSITION = conf.ORQUESTRA_HOME
     ORQUESTRA_MENU = 'left'
-    ORQUESTRA_MENU_ORDER = 1
-    ORQUESTRA_MENU_ICON = 'database'
+    ORQUESTRA_MENU_ORDER = 3
+    ORQUESTRA_MENU_ICON = 'tint blue'
