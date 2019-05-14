@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('auth', '0011_update_proxy_permissions'),
+        ('auth', '0009_alter_user_last_name_max_length'),
         ('fishdb', '0001_initial'),
     ]
 
