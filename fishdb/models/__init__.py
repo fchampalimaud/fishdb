@@ -1,2 +1,5 @@
-from .zebrafish import Zebrafish
-from .zebrafish_permission import ZebrafishPermission
+from .fish import AbstractFish
+
+
+# from .fish import Fish
+# from .zebrafish_permission import ZebrafishPermission
