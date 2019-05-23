@@ -26,6 +26,7 @@ class AbstractFish(models.Model):
 
     created = models.DateTimeField("Created", auto_now_add=True)
     modified = models.DateTimeField("Updated", auto_now=True)
+    species = models.ForeignKey(to='fishdb.Species', on_delete=models.PROTECT, db_column='species')
     background = models.CharField(max_length=20)
     genotype = models.CharField(max_length=20)
     phenotype = models.CharField(max_length=20)
