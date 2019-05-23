@@ -1,6 +1,6 @@
 # from .zebrafish_queryset import FishQuerySet
 # from .zebrafish_permission import ZebrafishPermission
-from .zebrafish_base import AbstractFish
+from .zebrafish_base import AbstractFish, Fish
 
 
 # class Fish(AbstractFish):

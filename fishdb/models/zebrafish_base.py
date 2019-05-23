@@ -57,3 +57,7 @@ class AbstractFish(models.Model):
                 raise ValidationError({"line_type_other": "This field is required."})
         else:
             self.line_type_other = ""
+
+
+class Fish(AbstractFish):
+    public = models.BooleanField("Public", default=False)
