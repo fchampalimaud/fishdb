@@ -7,5 +7,7 @@ class FishDBConfig(AppConfig):
 
     def ready(self):
         from .fish import FishApp
+        from .species import SpeciesApp
 
         global FishApp
+        global SpeciesApp
