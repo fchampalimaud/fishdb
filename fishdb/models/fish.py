@@ -1,4 +1,3 @@
-from django.core.exceptions import ValidationError
 from django.db import models
 
 from model_utils import Choices
@@ -8,15 +7,6 @@ class AbstractFish(models.Model):
     """
     Must be compatible with Congento model scheme!
     """
-
-    LINES = Choices(
-        ("wt", "WT"),
-        ("tg", "Tg"),
-        ("mu", "Mutant"),
-        ("cko", "CRISPR KO"),
-        ("cki", "CRISPR KI"),
-        ("other", "Other"),
-    )
 
     AVAILABILITIES = Choices(
         ("live", "Live"),
@@ -42,8 +32,7 @@ class AbstractFish(models.Model):
 
     line_name = models.CharField(max_length=20)
     line_number = models.CharField(max_length=20)
-    line_type = models.CharField(max_length=5, choices=LINES)
-    line_type_other = models.CharField(max_length=20, verbose_name="", blank=True)
+    line_type = models.ForeignKey(to='fishdb.Line', on_delete=models.PROTECT, related_name='fish')
 
     class Meta:
         verbose_name = "fish"
@@ -52,13 +41,6 @@ class AbstractFish(models.Model):
 
     def __str__(self):
         return self.line_name
-
-    def clean(self):
-        if self.line_type == self.LINES.other:
-            if not self.line_type_other:
-                raise ValidationError({"line_type_other": "This field is required."})
-        else:
-            self.line_type_other = ""
 
 
 class Fish(AbstractFish):

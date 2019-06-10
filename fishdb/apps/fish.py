@@ -10,7 +10,7 @@ class FishForm(ModelFormWidget):
     FIELDSETS = [
         ('public', 'owner'),
         "species",
-        ("line_name", "line_number", "line_type", "line_type_other"),
+        ("line_name", "line_number", "line_type"),
         ("background", "genotype", "phenotype", "origin"),
         ("availability", "mta"),
         "link",
@@ -26,23 +26,12 @@ class FishForm(ModelFormWidget):
 
         self.mta.checkbox_type = ""
 
-        self.line_type_other.label = "&nbsp"
-        self.line_type.changed_event = self.__on_line_type
-
-        self.__on_line_type()
-
     @property
     def title(self):
         try:
             return self.model_object.line_name
         except AttributeError:
             pass  # apparently it defaults to App TITLE
-
-    def __on_line_type(self):
-        if self.line_type.value == "other":
-            self.line_type_other.show()
-        else:
-            self.line_type_other.hide()
 
 
 class FishApp(ModelAdminWidget):

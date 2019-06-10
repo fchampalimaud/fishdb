@@ -1,5 +1,6 @@
 from .fish import AbstractFish, Fish
 from .species import Species
+from .line import Line
 
 
 # from .fish import Fish
