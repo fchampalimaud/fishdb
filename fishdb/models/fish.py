@@ -31,7 +31,7 @@ class AbstractFish(models.Model):
 
     line_name = models.CharField(max_length=20)
     line_number = models.CharField(max_length=20)
-    line_type = models.ForeignKey(to='fishdb.Line', on_delete=models.PROTECT, related_name='fish')
+    category = models.ForeignKey(to='fishdb.Category', on_delete=models.PROTECT, related_name='fish')
 
     class Meta:
         verbose_name = "fish"

@@ -1,12 +1,12 @@
 from django.db import models
 
 
-class Line(models.Model):
+class Category(models.Model):
     name = models.CharField(max_length=40)
 
     class Meta:
-        verbose_name = 'line'
-        verbose_name_plural = 'lines'
+        verbose_name = 'category'
+        verbose_name_plural = 'categories'
         ordering = ['name']
 
     def __str__(self):

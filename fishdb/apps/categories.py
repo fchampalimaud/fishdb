@@ -2,24 +2,24 @@ from confapp import conf
 from pyforms_web.widgets.django import ModelAdminWidget
 from pyforms_web.widgets.django import ModelFormWidget
 
-from fishdb.models import Line
+from fishdb.models import Category
 
 
-class FishLineForm(ModelFormWidget):
+class FishCategoryForm(ModelFormWidget):
 
     FIELDSETS = ["name"]
 
     LAYOUT_POSITION = conf.ORQUESTRA_NEW_WINDOW
 
 
-class FishLineApp(ModelAdminWidget):
+class FishCategoryApp(ModelAdminWidget):
 
-    UID = 'fish-line'
-    MODEL = Line
+    UID = 'fish-categories'
+    MODEL = Category
 
-    TITLE = 'Lines'
+    TITLE = 'Categories'
 
-    EDITFORM_CLASS = FishLineForm
+    EDITFORM_CLASS = FishCategoryForm
 
     USE_DETAILS_TO_ADD = False  # required to have form in NEW_TAB
     USE_DETAILS_TO_EDIT = False  # required to have form in NEW_TAB

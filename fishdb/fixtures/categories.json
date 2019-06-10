@@ -1,0 +1,1 @@
+[{"model": "fishdb.category", "pk": 1, "fields": {"name": "WT"}}, {"model": "fishdb.category", "pk": 2, "fields": {"name": "Tg"}}, {"model": "fishdb.category", "pk": 3, "fields": {"name": "Mutant"}}, {"model": "fishdb.category", "pk": 4, "fields": {"name": "CRISPR KO"}}, {"model": "fishdb.category", "pk": 5, "fields": {"name": "CRISPR KI"}}]
