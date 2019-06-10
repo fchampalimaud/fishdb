@@ -1,5 +1,5 @@
 from .fish import AbstractFish, Fish
-from .species import AbstractSpecies, Species
+from .species import Species
 
 
 # from .fish import Fish
