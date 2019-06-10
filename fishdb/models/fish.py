@@ -29,7 +29,7 @@ class AbstractFish(models.Model):
     link = models.URLField(blank=True)
     mta = models.BooleanField(verbose_name="MTA", default=False)
 
-    line_name = models.CharField(max_length=20)
+    line_name = models.CharField(max_length=255)
     line_number = models.CharField(max_length=20)
     category = models.ForeignKey(to='fishdb.Category', on_delete=models.PROTECT, related_name='fish')
 
