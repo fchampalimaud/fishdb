@@ -26,7 +26,6 @@ class AbstractFish(models.Model):
 
     # Fields shared with other congento animal models
     availability = models.CharField(max_length=4, choices=AVAILABILITIES)
-    comments = models.TextField(blank=True)
     link = models.URLField(blank=True)
     mta = models.BooleanField(verbose_name="MTA", default=False)
 
@@ -46,3 +45,5 @@ class AbstractFish(models.Model):
 class Fish(AbstractFish):
     public = models.BooleanField("Public", default=False)
     owner = models.ForeignKey(to='auth.Group', on_delete=models.PROTECT, null=True, blank=True)
+
+    comments = models.TextField(blank=True)
