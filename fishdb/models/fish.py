@@ -24,6 +24,7 @@ class AbstractFish(models.Model):
 
     # Specific fields for this animal model
     line_name = models.CharField(max_length=255)
+    common_name = models.CharField(max_length=50, blank=True)
     species = models.ForeignKey(to='fishdb.Species', on_delete=models.PROTECT, related_name='fish')
     category = models.ForeignKey(to='fishdb.Category', on_delete=models.PROTECT, related_name='fish')
     background = models.CharField(max_length=20)

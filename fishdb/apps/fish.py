@@ -10,7 +10,7 @@ class FishForm(ModelFormWidget):
     FIELDSETS = [
         ('public', 'owner'),
         "species",
-        ("line_name", "line_number", "category"),
+        ("line_name", "line_number", "category", "common_name"),
         ("background", "genotype", "phenotype", "origin"),
         ("availability", "mta"),
         "link",
