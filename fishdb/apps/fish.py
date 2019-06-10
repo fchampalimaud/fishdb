@@ -15,7 +15,7 @@ class FishForm(ModelFormWidget):
         "location",
         ("availability", "mta"),
         "link",
-        "comments",
+        ("comments", "line_description"),
         ("maintainer", "ownership"),
     ]
 

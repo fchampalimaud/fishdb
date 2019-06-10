@@ -32,6 +32,7 @@ class AbstractFish(models.Model):
     genotype = models.CharField(max_length=20)
     phenotype = models.CharField(max_length=20)
     origin = models.CharField(max_length=20)
+    line_description = models.TextField(blank=True)
 
     class Meta:
         verbose_name = "fish"
