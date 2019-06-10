@@ -9,6 +9,7 @@ class FishForm(ModelFormWidget):
 
     FIELDSETS = [
         ('public', 'owner'),
+        "species",
         ("line_name", "line_number", "line_type", "line_type_other"),
         ("background", "genotype", "phenotype", "origin"),
         ("availability", "mta"),
@@ -57,6 +58,7 @@ class FishApp(ModelAdminWidget):
         "line_name",
         "line_number",
         "line_type",
+        "species",
         "background",
         "genotype",
         "origin",
@@ -66,6 +68,7 @@ class FishApp(ModelAdminWidget):
 
     LIST_FILTER = [
         "line_type",
+        "species",
         "mta",
         "availability",
     ]
