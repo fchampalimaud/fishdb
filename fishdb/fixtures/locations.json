@@ -1,0 +1,1 @@
+[{"model": "fishdb.location", "pk": 1, "fields": {"name": "Main System"}}, {"model": "fishdb.location", "pk": 2, "fields": {"name": "Quarantine"}}]

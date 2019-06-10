@@ -50,4 +50,5 @@ class Fish(AbstractFish):
     ownership = models.ForeignKey(to="auth.Group", on_delete=models.PROTECT, null=True, blank=True)
 
     line_number = models.CharField(max_length=20)  # FIXME FK requested (test)
+    location = models.ForeignKey(to='fishdb.Location', on_delete=models.PROTECT, related_name='fish')
     comments = models.TextField(blank=True)

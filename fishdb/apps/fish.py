@@ -12,6 +12,7 @@ class FishForm(ModelFormWidget):
         "species",
         ("line_name", "line_number", "category", "common_name"),
         ("background", "genotype", "phenotype", "origin"),
+        "location",
         ("availability", "mta"),
         "link",
         "comments",
