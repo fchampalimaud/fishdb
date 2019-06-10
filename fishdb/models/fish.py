@@ -15,22 +15,21 @@ class AbstractFish(models.Model):
         ("none", "Unavailable"),
     )
 
+    # Fields shared with other congento animal models
     created = models.DateTimeField("Created", auto_now_add=True)
     modified = models.DateTimeField("Updated", auto_now=True)
-
-    species = models.ForeignKey(to='fishdb.Species', on_delete=models.PROTECT, related_name='fish')
-    background = models.CharField(max_length=20)
-    genotype = models.CharField(max_length=20)
-    phenotype = models.CharField(max_length=20)
-    origin = models.CharField(max_length=20)
-
-    # Fields shared with other congento animal models
     availability = models.CharField(max_length=4, choices=AVAILABILITIES)
     link = models.URLField(blank=True)
     mta = models.BooleanField(verbose_name="MTA", default=False)
 
+    # Specific fields for this animal model
     line_name = models.CharField(max_length=255)
+    species = models.ForeignKey(to='fishdb.Species', on_delete=models.PROTECT, related_name='fish')
     category = models.ForeignKey(to='fishdb.Category', on_delete=models.PROTECT, related_name='fish')
+    background = models.CharField(max_length=20)
+    genotype = models.CharField(max_length=20)
+    phenotype = models.CharField(max_length=20)
+    origin = models.CharField(max_length=20)
 
     class Meta:
         verbose_name = "fish"
