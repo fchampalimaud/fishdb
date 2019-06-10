@@ -5,7 +5,7 @@ class FishDBConfig(AppConfig):
     name = "fishdb"
     verbose_name = "Fish DB"
 
-    # def ready(self):
-    #     from .fish import FishApp
+    def ready(self):
+        from .fish import FishApp
 
-    #     global FishApp
+        global FishApp
