@@ -10,7 +10,7 @@ class FishForm(ModelFormWidget):
         'public',
         ("line_name", "line_number", "line_type", "line_type_other"),
         ("background", "genotype", "phenotype", "origin"),
-        ("availability", "mta", 'lab'),
+        ("availability", "mta"),
         "link",
         "comments",
     ]
