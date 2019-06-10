@@ -30,7 +30,6 @@ class AbstractFish(models.Model):
     mta = models.BooleanField(verbose_name="MTA", default=False)
 
     line_name = models.CharField(max_length=255)
-    line_number = models.CharField(max_length=20)
     category = models.ForeignKey(to='fishdb.Category', on_delete=models.PROTECT, related_name='fish')
 
     class Meta:
@@ -46,4 +45,5 @@ class Fish(AbstractFish):
     public = models.BooleanField("Public", default=False)
     owner = models.ForeignKey(to='auth.Group', on_delete=models.PROTECT, null=True, blank=True)
 
+    line_number = models.CharField(max_length=20)  # FIXME FK requested (test)
     comments = models.TextField(blank=True)
