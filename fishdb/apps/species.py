@@ -5,21 +5,21 @@ from pyforms_web.widgets.django import ModelFormWidget
 from fishdb.models import Species
 
 
-class SpeciesForm(ModelFormWidget):
+class FishSpeciesForm(ModelFormWidget):
 
     FIELDSETS = ["name"]
 
     LAYOUT_POSITION = conf.ORQUESTRA_NEW_WINDOW
 
 
-class SpeciesApp(ModelAdminWidget):
+class FishSpeciesApp(ModelAdminWidget):
 
     UID = 'fish-species'
     MODEL = Species
 
     TITLE = 'Species'
 
-    EDITFORM_CLASS = SpeciesForm
+    EDITFORM_CLASS = FishSpeciesForm
 
     USE_DETAILS_TO_ADD = False  # required to have form in NEW_TAB
     USE_DETAILS_TO_EDIT = False  # required to have form in NEW_TAB
