@@ -8,13 +8,14 @@ from fishdb.models import Fish
 class FishForm(ModelFormWidget):
 
     FIELDSETS = [
-        ('public', 'owner'),
+        'public',
         "species",
         ("line_name", "line_number", "category", "common_name"),
         ("background", "genotype", "phenotype", "origin"),
         ("availability", "mta"),
         "link",
         "comments",
+        ("maintainer", "ownership"),
     ]
 
     READ_ONLY = ['owner']

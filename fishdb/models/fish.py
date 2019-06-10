@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 from model_utils import Choices
@@ -43,7 +44,10 @@ class AbstractFish(models.Model):
 
 class Fish(AbstractFish):
     public = models.BooleanField("Public", default=False)
-    owner = models.ForeignKey(to='auth.Group', on_delete=models.PROTECT, null=True, blank=True)
+
+    # TODO test and fix the two ownership fields
+    maintainer = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True, blank=True)
+    ownership = models.ForeignKey(to="auth.Group", on_delete=models.PROTECT, null=True, blank=True)
 
     line_number = models.CharField(max_length=20)  # FIXME FK requested (test)
     comments = models.TextField(blank=True)
