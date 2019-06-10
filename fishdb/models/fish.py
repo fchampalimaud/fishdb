@@ -63,3 +63,4 @@ class AbstractFish(models.Model):
 
 class Fish(AbstractFish):
     public = models.BooleanField("Public", default=False)
+    owner = models.ForeignKey(to='auth.Group', on_delete=models.PROTECT, null=True, blank=True)

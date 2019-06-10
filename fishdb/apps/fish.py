@@ -8,13 +8,15 @@ from fishdb.models import Fish
 class FishForm(ModelFormWidget):
 
     FIELDSETS = [
-        'public',
+        ('public', 'owner'),
         ("line_name", "line_number", "line_type", "line_type_other"),
         ("background", "genotype", "phenotype", "origin"),
         ("availability", "mta"),
         "link",
         "comments",
     ]
+
+    READ_ONLY = ['owner']
 
     LAYOUT_POSITION = conf.ORQUESTRA_NEW_TAB
 
