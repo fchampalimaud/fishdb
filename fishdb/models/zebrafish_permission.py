@@ -5,7 +5,7 @@ class ZebrafishPermission(models.Model):
 
 
     viewonly  = models.BooleanField('Read only access')
-    zebrafish = models.ForeignKey('Zebrafish',  on_delete=models.CASCADE)
+    fish = models.ForeignKey('Fish',  on_delete=models.CASCADE)
     group     = models.ForeignKey('auth.Group', on_delete=models.CASCADE)
 
     def __str__(self):
@@ -20,5 +20,5 @@ class ZebrafishPermission(models.Model):
         verbose_name_plural = "Zebrafishs permissions"
 
         unique_together = (
-            ('zebrafish', 'group'),
+            ('fish', 'group'),
         )

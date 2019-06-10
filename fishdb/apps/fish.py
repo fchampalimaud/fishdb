@@ -2,7 +2,8 @@ from confapp import conf
 from pyforms_web.widgets.django import ModelAdminWidget
 from pyforms_web.widgets.django import ModelFormWidget
 
-from fishdb.models import Zebrafish
+from fishdb.models import Fish
+
 
 class FishForm(ModelFormWidget):
 
@@ -44,9 +45,9 @@ class FishForm(ModelFormWidget):
 class FishApp(ModelAdminWidget):
 
     UID = 'fishdb'
-    MODEL = Zebrafish
+    MODEL = Fish
 
-    TITLE = 'Zebrafish'
+    TITLE = 'Fish'
 
     EDITFORM_CLASS = FishForm
 

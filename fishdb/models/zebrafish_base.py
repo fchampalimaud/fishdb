@@ -7,6 +7,9 @@ from model_utils import Choices
 # TODO move me to fish model file
 
 class AbstractFish(models.Model):
+    """
+    Must be compatible with Congento model scheme!
+    """
 
     LINES = Choices(
         ("wt", "WT"),
@@ -26,6 +29,7 @@ class AbstractFish(models.Model):
 
     created = models.DateTimeField("Created", auto_now_add=True)
     modified = models.DateTimeField("Updated", auto_now=True)
+
     species = models.ForeignKey(to='fishdb.Species', on_delete=models.PROTECT, related_name='fish')
     background = models.CharField(max_length=20)
     genotype = models.CharField(max_length=20)
