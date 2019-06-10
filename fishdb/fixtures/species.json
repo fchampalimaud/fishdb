@@ -1,0 +1,1 @@
+[{"model": "fishdb.species", "pk": 1, "fields": {"name": "Danio rerio"}}, {"model": "fishdb.species", "pk": 2, "fields": {"name": "Devario aequipinnatus"}}, {"model": "fishdb.species", "pk": 3, "fields": {"name": "Danionella translucida"}}, {"model": "fishdb.species", "pk": 4, "fields": {"name": "Nothobranchius furzeri"}}]
