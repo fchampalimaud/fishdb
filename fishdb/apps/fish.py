@@ -1,4 +1,5 @@
 from confapp import conf
+from pyforms_web.web.middleware import PyFormsMiddleware
 from pyforms_web.widgets.django import ModelAdminWidget
 from pyforms_web.widgets.django import ModelFormWidget
 
@@ -16,7 +17,6 @@ class FishForm(ModelFormWidget):
         ("availability", "mta"),
         "link",
         ("comments", "line_description"),
-        ("maintainer", "ownership"),
     ]
 
     READ_ONLY = ['owner']
@@ -34,6 +34,12 @@ class FishForm(ModelFormWidget):
             return self.model_object.line_name
         except AttributeError:
             pass  # apparently it defaults to App TITLE
+
+    def get_fieldsets(self, default):
+        user = PyFormsMiddleware.user()
+        if user.is_superuser:
+            default += [("maintainer", "ownership"),]
+        return default
 
 
 class FishApp(ModelAdminWidget):
