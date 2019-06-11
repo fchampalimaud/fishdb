@@ -83,3 +83,13 @@ class FishApp(ModelAdminWidget):
     ORQUESTRA_MENU = 'left'
     ORQUESTRA_MENU_ORDER = 3
     ORQUESTRA_MENU_ICON = 'tint blue'
+
+    @classmethod
+    def has_permissions(cls, user):
+        if user.is_superuser:
+            return True
+
+        if user.groups.filter(name="Fish Facility").exists():
+            return True
+
+        return False
