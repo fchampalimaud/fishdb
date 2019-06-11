@@ -58,19 +58,23 @@ class FishApp(ModelAdminWidget):
     ]
 
     LIST_FILTER = [
-        "category",
         "species",
+        "category",
+        "location",
         "mta",
         "availability",
     ]
 
     SEARCH_FIELDS = [
         "line_name__icontains",
-        "line_number__icontains",
-        "category__icontains",
+        "common_name__icontains",
         "background__icontains",
         "genotype__icontains",
+        "phenotype__icontains",
         "origin__icontains",
+        "line_description__icontains",
+        "line_number__icontains",
+        "comments__icontains",
     ]
 
     USE_DETAILS_TO_EDIT = False  # required to have form in NEW_TAB
