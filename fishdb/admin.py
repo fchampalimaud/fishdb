@@ -1,11 +1,13 @@
 from django.contrib import admin
 
-from .models import Fish
-from .models import Species
-from .models import Category
-from .models import Location
+from . import models
 
-admin.site.register(Fish)
-admin.site.register(Species)
-admin.site.register(Category)
-admin.site.register(Location)
+
+@admin.register(models.Fish)
+class FishAdmin(admin.ModelAdmin):
+    readonly_fields = ["created", "modified"]
+
+
+admin.site.register(models.Species)
+admin.site.register(models.Category)
+admin.site.register(models.Location)
