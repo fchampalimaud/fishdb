@@ -52,12 +52,12 @@ class FishApp(ModelAdminWidget):
     EDITFORM_CLASS = FishForm
 
     LIST_DISPLAY = [
+        "species",
+        "category",
         "line_name",
         "line_number",
-        "category",
-        "species",
-        "background",
         "genotype",
+        "background",
         "origin",
         "mta",
         "availability",
