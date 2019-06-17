@@ -69,6 +69,7 @@ class FishApp(ModelAdminWidget):
         "location",
         "mta",
         "availability",
+        "ownership",
     ]
 
     SEARCH_FIELDS = [
