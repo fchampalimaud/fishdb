@@ -40,7 +40,7 @@ class AbstractFish(models.Model):
         abstract = True
 
     def __str__(self):
-        return self.line_name
+        return self.strain_name
 
 
 class Fish(AbstractFish):
