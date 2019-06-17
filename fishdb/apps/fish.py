@@ -17,7 +17,7 @@ class FishForm(ModelFormWidget):
             ("availability", "link"),
             no_columns("mta"),
             no_columns("public"),
-            "info:You can use the field <b>Line description</b> below to "
+            "info:You can use the <b>Line description</b> field below to "
             "provide more details. Use the <b>Comments</b> field below for "
             "private notes.",
             ("line_description", "comments"),
