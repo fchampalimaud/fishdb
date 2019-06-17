@@ -1,4 +1,5 @@
 from confapp import conf
+from pyforms_web.organizers import no_columns, segment
 from pyforms_web.web.middleware import PyFormsMiddleware
 from pyforms_web.widgets.django import ModelAdminWidget
 from pyforms_web.widgets.django import ModelFormWidget
@@ -9,17 +10,23 @@ from fishdb.models import Fish
 class FishForm(ModelFormWidget):
 
     FIELDSETS = [
-        'public',
-        "species",
-        ("strain_name", "line_number", "category", "common_name"),
-        ("background", "genotype", "phenotype", "origin"),
-        "location",
-        ("availability", "mta"),
-        "link",
-        ("comments", "line_description"),
+        segment(
+            ("species", "category"),
+            ("strain_name", "common_name", "line_number", "location"),
+            ("background", "genotype", "phenotype", "origin"),
+            ("availability", "link"),
+            no_columns("mta"),
+            no_columns("public"),
+            "info:You can use the field <b>Line description</b> below to "
+            "provide more details. Use the <b>Comments</b> field below for "
+            "private notes.",
+            ("line_description", "comments"),
+        ),
     ]
 
     READ_ONLY = ['owner']
+
+    CLOSE_ON_REMOVE = True
 
     LAYOUT_POSITION = conf.ORQUESTRA_NEW_TAB
 
@@ -27,6 +34,10 @@ class FishForm(ModelFormWidget):
         super().__init__(*args, **kwargs)
 
         self.mta.checkbox_type = ""
+        self.mta.label_visible = False
+        self.public.checkbox_type = ""
+        self.public.label_visible = False
+        self.public.label = "Share with Congento network"
 
     @property
     def title(self):
