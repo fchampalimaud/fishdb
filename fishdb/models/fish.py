@@ -28,10 +28,10 @@ class AbstractFish(models.Model):
     common_name = models.CharField(max_length=50, blank=True)
     species = models.ForeignKey(to='fishdb.Species', on_delete=models.PROTECT, related_name='fish')
     category = models.ForeignKey(to='fishdb.Category', on_delete=models.PROTECT, related_name='fish')
-    background = models.CharField(max_length=20)
-    genotype = models.CharField(max_length=20)
-    phenotype = models.CharField(max_length=20)
-    origin = models.CharField(max_length=20)
+    background = models.CharField(max_length=30)
+    genotype = models.CharField(max_length=30)
+    phenotype = models.CharField(max_length=30)
+    origin = models.CharField(max_length=30)
     line_description = models.TextField(blank=True)
 
     class Meta:
