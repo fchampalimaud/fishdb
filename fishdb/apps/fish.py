@@ -11,7 +11,7 @@ class FishForm(ModelFormWidget):
     FIELDSETS = [
         'public',
         "species",
-        ("line_name", "line_number", "category", "common_name"),
+        ("strain_name", "line_number", "category", "common_name"),
         ("background", "genotype", "phenotype", "origin"),
         "location",
         ("availability", "mta"),
@@ -31,7 +31,7 @@ class FishForm(ModelFormWidget):
     @property
     def title(self):
         try:
-            return self.model_object.line_name
+            return self.model_object.strain_name
         except AttributeError:
             pass  # apparently it defaults to App TITLE
 
@@ -54,7 +54,7 @@ class FishApp(ModelAdminWidget):
     LIST_DISPLAY = [
         "species",
         "category",
-        "line_name",
+        "strain_name",
         "line_number",
         "genotype",
         "background",
@@ -72,7 +72,7 @@ class FishApp(ModelAdminWidget):
     ]
 
     SEARCH_FIELDS = [
-        "line_name__icontains",
+        "strain_name__icontains",
         "common_name__icontains",
         "background__icontains",
         "genotype__icontains",
