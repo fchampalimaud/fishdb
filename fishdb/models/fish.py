@@ -21,7 +21,6 @@ class AbstractFish(models.Model):
     modified = models.DateTimeField("Updated", auto_now=True)
     availability = models.CharField(max_length=4, choices=AVAILABILITIES)
     link = models.URLField(blank=True)
-    mta = models.BooleanField(verbose_name="MTA", default=False)
 
     # Specific fields for this animal model
     strain_name = models.CharField(max_length=255)
@@ -45,6 +44,7 @@ class AbstractFish(models.Model):
 
 class Fish(AbstractFish):
     public = models.BooleanField("Public", default=False)
+    mta = models.BooleanField(verbose_name="MTA", default=False)
 
     # TODO test and fix the two ownership fields
     maintainer = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True, blank=True)
