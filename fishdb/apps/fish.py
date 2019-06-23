@@ -108,7 +108,7 @@ class FishApp(ModelAdminWidget):
             return True
 
         if user.memberships.filter(
-                group__accesses__db=cls.MODEL._meta.app_label
+                group__accesses__animaldb=cls.MODEL._meta.app_label
         ).exists():
             return True
 
