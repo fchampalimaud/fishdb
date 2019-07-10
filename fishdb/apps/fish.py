@@ -37,7 +37,6 @@ class FishForm(ModelFormWidget):
         self.mta.label_visible = False
         self.public.checkbox_type = ""
         self.public.label_visible = False
-        self.public.label = "Share with Congento network"
 
     @property
     def title(self):
