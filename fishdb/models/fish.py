@@ -31,6 +31,7 @@ class AbstractFish(models.Model):
     genotype = models.CharField(max_length=30)
     phenotype = models.CharField(max_length=30)
     origin = models.CharField(max_length=80, blank=True)
+    mta = models.BooleanField(verbose_name="MTA", default=True)
     line_description = models.TextField(blank=True)
 
     class Meta:
@@ -44,7 +45,6 @@ class AbstractFish(models.Model):
 
 class Fish(AbstractFish):
     public = models.BooleanField(verbose_name="Public through Congento", default=False)
-    mta = models.BooleanField(verbose_name="MTA", default=False)
 
     # TODO test and fix the two ownership fields
     maintainer = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True, blank=True)
