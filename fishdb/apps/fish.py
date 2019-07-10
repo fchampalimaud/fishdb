@@ -23,7 +23,7 @@ class FishForm(ModelFormWidget):
     FIELDSETS = [
         segment(
             ("species", "category"),
-            ("strain_name", "common_name", "line_number", "location"),
+            ("strain_name", "common_name", "line_number", " "),
             ("background", "genotype", "phenotype", "origin"),
             ("availability", "link"),
             no_columns("mta"),
@@ -89,7 +89,7 @@ class FishApp(ModelAdminWidget):
     LIST_FILTER = [
         "species",
         "category",
-        "location",
+        # "location",
         "mta",
         "availability",
         "public",

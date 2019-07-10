@@ -9,9 +9,9 @@ class FishDBConfig(AppConfig):
         from .fish import FishApp
         from .species import FishSpeciesApp
         from .categories import FishCategoryApp
-        from .locations import FishLocationApp
+        # from .locations import FishLocationApp
 
         global FishApp
         global FishSpeciesApp
         global FishCategoryApp
-        global FishLocationApp
+        # global FishLocationApp  # Deprecated on 2019 jul 10, see note on model

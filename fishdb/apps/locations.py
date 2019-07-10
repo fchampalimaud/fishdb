@@ -1,3 +1,7 @@
+"""
+Deprecated on 2019 jul 10, see note on model
+"""
+
 from confapp import conf
 from pyforms_web.widgets.django import ModelAdminWidget
 from pyforms_web.widgets.django import ModelFormWidget
