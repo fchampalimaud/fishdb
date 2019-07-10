@@ -31,6 +31,7 @@ class AbstractFish(models.Model):
     genotype = models.CharField(max_length=30)
     phenotype = models.CharField(max_length=30)
     origin = models.CharField(verbose_name="Imported from", max_length=80, blank=True)
+    quarantine = models.BooleanField(verbose_name="Quarantine", default=False)
     mta = models.BooleanField(verbose_name="MTA", default=True)
     line_description = models.TextField(blank=True)
 

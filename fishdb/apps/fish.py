@@ -26,6 +26,7 @@ class FishForm(ModelFormWidget):
             ("strain_name", "common_name", "line_number", " "),
             ("background", "genotype", "phenotype", "origin"),
             ("availability", "link"),
+            no_columns("quarantine"),
             no_columns("mta"),
             no_columns("public"),
             "info:You can use the <b>Line description</b> field below to "
@@ -46,6 +47,8 @@ class FishForm(ModelFormWidget):
 
         self.origin.label += ORIGIN_HELP_TAG
 
+        self.quarantine.checkbox_type = ""
+        self.quarantine.label_visible = False
         self.mta.checkbox_type = ""
         self.mta.label_visible = False
         self.public.checkbox_type = ""
@@ -89,6 +92,7 @@ class FishApp(ModelAdminWidget):
     LIST_FILTER = [
         "species",
         "category",
+        "quarantine",
         # "location",
         "mta",
         "availability",
