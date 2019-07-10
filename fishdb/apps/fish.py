@@ -20,22 +20,6 @@ ORIGIN_HELP_TAG = """
 
 class FishForm(ModelFormWidget):
 
-    FIELDSETS = [
-        segment(
-            ("species", "category"),
-            ("strain_name", "common_name", "line_number", " "),
-            ("background", "genotype", "phenotype", "origin"),
-            ("availability", "link"),
-            no_columns("quarantine"),
-            no_columns("mta"),
-            no_columns("public"),
-            "info:You can use the <b>Line description</b> field below to "
-            "provide more details. Use the <b>Comments</b> field below for "
-            "private notes.",
-            ("line_description", "comments"),
-        ),
-    ]
-
     READ_ONLY = ['owner']
 
     CLOSE_ON_REMOVE = True
@@ -63,8 +47,25 @@ class FishForm(ModelFormWidget):
 
     def get_fieldsets(self, default):
         user = PyFormsMiddleware.user()
+        default = [
+            segment(
+                ("species", "category"),
+                ("strain_name", "common_name", "line_number", " "),
+                ("background", "genotype", "phenotype", "origin"),
+                ("availability", "link"),
+                no_columns("quarantine"),
+                no_columns("mta"),
+                no_columns("public"),
+                "info:You can use the <b>Line description</b> field below to "
+                "provide more details. Use the <b>Comments</b> field below for "
+                "private notes.",
+                ("line_description", "comments"),
+            ),
+        ]
+
         if user.is_superuser:
             default += [("maintainer", "ownership"),]
+
         return default
 
 
