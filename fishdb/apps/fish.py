@@ -1,4 +1,5 @@
 from confapp import conf
+from pyforms.controls import ControlCheckBox
 from pyforms_web.organizers import no_columns, segment
 from pyforms_web.web.middleware import PyFormsMiddleware
 from pyforms_web.widgets.django import ModelAdminWidget
@@ -6,6 +7,16 @@ from pyforms_web.widgets.django import ModelFormWidget
 
 from fishdb.models import Fish
 
+
+ORIGIN_HELP_TAG = """
+<span
+    data-inverted=""
+    data-tooltip="Leave blank for in-house generated lines"
+    data-position="top center"
+>
+    <i class="help link teal icon"></i>
+</span>
+"""
 
 class FishForm(ModelFormWidget):
 
@@ -32,6 +43,8 @@ class FishForm(ModelFormWidget):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        self.origin.label += ORIGIN_HELP_TAG
 
         self.mta.checkbox_type = ""
         self.mta.label_visible = False
@@ -68,7 +81,7 @@ class FishApp(ModelAdminWidget):
         "line_number",
         "genotype",
         "background",
-        "origin",
+        "get_origin",
         "mta",
         "availability",
     ]
@@ -113,3 +126,24 @@ class FishApp(ModelAdminWidget):
             return True
 
         return False
+
+    def __init__(self, *args, **kwargs):
+
+        self._inhouse_filter = ControlCheckBox(
+            "List only in-house generated lines",
+            default=False,
+            label_visible=False,
+            changed_event=self.populate_list,
+        )
+
+        super().__init__(*args, **kwargs)
+
+    def get_toolbar_buttons(self, has_add_permission=False):
+        toolbar = super().get_toolbar_buttons(has_add_permission)
+        return tuple([toolbar] + ["_inhouse_filter"])
+
+    def get_queryset(self, request, qs):
+            if self._inhouse_filter.value:
+                qs = qs.filter(origin__exact="")
+
+            return qs

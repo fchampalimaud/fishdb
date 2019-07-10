@@ -30,7 +30,7 @@ class AbstractFish(models.Model):
     background = models.CharField(max_length=30)
     genotype = models.CharField(max_length=30)
     phenotype = models.CharField(max_length=30)
-    origin = models.CharField(max_length=80, blank=True)
+    origin = models.CharField(verbose_name="Imported from", max_length=80, blank=True)
     mta = models.BooleanField(verbose_name="MTA", default=True)
     line_description = models.TextField(blank=True)
 
@@ -41,6 +41,12 @@ class AbstractFish(models.Model):
 
     def __str__(self):
         return self.strain_name
+
+    def get_origin(self):
+        # FIXME get correct isntitution name after from configuration (settings or DB)
+        return self.origin or getattr(settings, "INSTITUTION_NAME", "in-house")
+
+    get_origin.short_description = "Origin"
 
 
 class Fish(AbstractFish):
