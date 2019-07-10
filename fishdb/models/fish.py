@@ -43,7 +43,7 @@ class AbstractFish(models.Model):
 
 
 class Fish(AbstractFish):
-    public = models.BooleanField("Public", default=False)
+    public = models.BooleanField(verbose_name="Public through Congento", default=False)
     mta = models.BooleanField(verbose_name="MTA", default=False)
 
     # TODO test and fix the two ownership fields

@@ -80,6 +80,7 @@ class FishApp(ModelAdminWidget):
         "location",
         "mta",
         "availability",
+        "public",
         "ownership",
     ]
 
