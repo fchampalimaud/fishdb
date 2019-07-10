@@ -27,10 +27,10 @@ class AbstractFish(models.Model):
     common_name = models.CharField(max_length=50, blank=True)
     species = models.ForeignKey(to='fishdb.Species', on_delete=models.PROTECT, related_name='fish')
     category = models.ForeignKey(to='fishdb.Category', on_delete=models.PROTECT, related_name='fish')
-    background = models.CharField(max_length=30, blank=True)
-    genotype = models.CharField(max_length=30, blank=True)
-    phenotype = models.CharField(max_length=30, blank=True)
-    origin = models.CharField(max_length=30)
+    background = models.CharField(max_length=30)
+    genotype = models.CharField(max_length=30)
+    phenotype = models.CharField(max_length=30)
+    origin = models.CharField(max_length=80, blank=True)
     line_description = models.TextField(blank=True)
 
     class Meta:
@@ -50,6 +50,6 @@ class Fish(AbstractFish):
     maintainer = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True, blank=True)
     ownership = models.ForeignKey(to="auth.Group", on_delete=models.PROTECT, null=True, blank=True)
 
-    line_number = models.PositiveIntegerField()
+    line_number = models.PositiveIntegerField(null=True, blank=True)
     location = models.ForeignKey(to='fishdb.Location', on_delete=models.PROTECT, related_name='fish')
     comments = models.TextField(blank=True)
