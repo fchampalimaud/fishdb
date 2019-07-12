@@ -20,7 +20,6 @@ ORIGIN_HELP_TAG = """
 
 class FishForm(ModelFormWidget):
 
-    READ_ONLY = ["created", "modified"]
 
     CLOSE_ON_REMOVE = True
 
@@ -68,6 +67,10 @@ class FishForm(ModelFormWidget):
 
         return default
 
+    def get_readonly(self, default):
+        default = ["created", "modified"]
+
+        return default
 
 class FishApp(ModelAdminWidget):
 
