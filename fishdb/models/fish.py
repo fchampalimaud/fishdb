@@ -55,7 +55,7 @@ class Fish(AbstractFish):
 
     # TODO test and fix the two ownership fields
     maintainer = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True, blank=True)
-    ownership = models.ForeignKey(to="auth.Group", on_delete=models.PROTECT, null=True, blank=True)
+    ownership = models.ForeignKey(to="users.Group", on_delete=models.PROTECT, null=True, blank=True)
 
     line_number = models.PositiveIntegerField(null=True, blank=True)
     # location = models.ForeignKey(to='fishdb.Location', on_delete=models.PROTECT, related_name='fish')
