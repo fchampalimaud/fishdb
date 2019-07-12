@@ -55,7 +55,7 @@ class FishForm(ModelFormWidget):
             pass  # apparently it defaults to App TITLE
 
     def get_fieldsets(self, default):
-        user = PyFormsMiddleware.user()
+
         default = [
             segment(
                 ("species", "category"),
@@ -71,14 +71,24 @@ class FishForm(ModelFormWidget):
                 ("line_description", "comments"),
             ),
         ]
-
-        if user.is_superuser:
+        if self.object_pk:  # editing existing object
             default += [("maintainer", "ownership", "created", "modified"),]
 
         return default
 
     def get_readonly(self, default):
+        user = PyFormsMiddleware.user()
+        animaldb = self.model._meta.app_label
+        access_level = user.get_access_level(animaldb)
+
         default = ["created", "modified"]
+
+        if access_level in ("superuser", "admin"):
+            pass
+        elif access_level in ("manager",) and self.model_object.ownership == user.get_group():
+            default += ["ownership"]
+        else:
+            default += ["maintainer", "ownership"]
 
         return default
 
