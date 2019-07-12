@@ -18,8 +18,18 @@ ORIGIN_HELP_TAG = """
 </span>
 """
 
-class FishForm(ModelFormWidget):
 
+def limit_choices_to_database(animaldb, field, queryset):
+    """Limit the query for related fields to values related to with a DB."""
+    # TODO general congento utility, move to common module
+    if field.name == "maintainer":
+        queryset = queryset.filter(group__accesses__animaldb=animaldb)
+    if field.name == "ownership":
+        queryset = queryset.filter(accesses__animaldb=animaldb)
+    return queryset
+
+
+class FishForm(ModelFormWidget):
 
     CLOSE_ON_REMOVE = True
 
@@ -71,6 +81,12 @@ class FishForm(ModelFormWidget):
         default = ["created", "modified"]
 
         return default
+
+    def get_related_field_queryset(self, field, queryset):
+        animaldb = self.model._meta.app_label
+        queryset = limit_choices_to_database(animaldb, field, queryset)
+        return queryset
+
 
 class FishApp(ModelAdminWidget):
 
@@ -158,9 +174,6 @@ class FishApp(ModelAdminWidget):
             return qs
 
     def get_related_field_queryset(self, request, list_queryset, field, queryset):
-        # limit filters to values related to with this DB
-        if field.name == "maintainer":
-            queryset = queryset.filter(group__accesses__animaldb=self.model._meta.app_label)
-        if field.name == "ownership":
-            queryset = queryset.filter(accesses__animaldb=self.model._meta.app_label)
+        animaldb = self.model._meta.app_label
+        queryset = limit_choices_to_database(animaldb, field, queryset)
         return queryset
