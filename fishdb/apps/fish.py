@@ -20,7 +20,7 @@ ORIGIN_HELP_TAG = """
 
 class FishForm(ModelFormWidget):
 
-    READ_ONLY = ['owner']
+    READ_ONLY = ["created", "modified"]
 
     CLOSE_ON_REMOVE = True
 
