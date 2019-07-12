@@ -98,7 +98,8 @@ class FishApp(ModelAdminWidget):
         "mta",
         "availability",
         "public",
-        # "ownership",
+        "maintainer",
+        "ownership",
     ]
 
     SEARCH_FIELDS = [
@@ -152,3 +153,11 @@ class FishApp(ModelAdminWidget):
                 qs = qs.filter(origin__exact="")
 
             return qs
+
+    def get_related_field_queryset(self, request, list_queryset, field, queryset):
+        # limit filters to values related to with this DB
+        if field.name == "maintainer":
+            queryset = queryset.filter(group__accesses__animaldb=self.model._meta.app_label)
+        if field.name == "ownership":
+            queryset = queryset.filter(accesses__animaldb=self.model._meta.app_label)
+        return queryset
