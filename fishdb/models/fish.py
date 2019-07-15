@@ -1,8 +1,8 @@
 from django.conf import settings
 from django.db import models
-
 from model_utils import Choices
 
+from fishdb.querysets import FishQuerySet
 
 class AbstractFish(models.Model):
     """
@@ -60,3 +60,5 @@ class Fish(AbstractFish):
     line_number = models.PositiveIntegerField(null=True, blank=True)
     # location = models.ForeignKey(to='fishdb.Location', on_delete=models.PROTECT, related_name='fish')
     comments = models.TextField(blank=True)
+
+    objects = FishQuerySet.as_manager()
