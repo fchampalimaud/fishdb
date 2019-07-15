@@ -31,6 +31,6 @@ class FishCategoryApp(ModelAdminWidget):
 
     @classmethod
     def has_permissions(cls, user):
-        if user.is_superuser:
+        if user.is_superuser or user.is_admin(cls.MODEL._meta.app_label):
             return True
         return False
