@@ -22,11 +22,16 @@ ORIGIN_HELP_TAG = """
 def limit_choices_to_database(animaldb, field, queryset):
     """Limit the query for related fields to values related to with a DB."""
     # TODO general congento utility, move to common module
+    user = PyFormsMiddleware.user()
+
     if field.name == "maintainer":
         queryset = queryset.filter(group__accesses__animaldb=animaldb)
+        if user.is_manager():
+            queryset = queryset.filter(group=user.get_group())
+
     if field.name == "ownership":
         queryset = queryset.filter(accesses__animaldb=animaldb)
-    return queryset
+    return queryset.distinct()
 
 
 class FishForm(ModelFormWidget):
