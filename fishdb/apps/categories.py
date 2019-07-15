@@ -14,10 +14,10 @@ class FishCategoryForm(ModelFormWidget):
 
 class FishCategoryApp(ModelAdminWidget):
 
-    UID = 'fish-categories'
+    UID = "fish-categories"
     MODEL = Category
 
-    TITLE = 'Categories'
+    TITLE = "Categories"
 
     EDITFORM_CLASS = FishCategoryForm
 
@@ -25,9 +25,9 @@ class FishCategoryApp(ModelAdminWidget):
     USE_DETAILS_TO_EDIT = False  # required to have form in NEW_TAB
 
     LAYOUT_POSITION = conf.ORQUESTRA_HOME
-    ORQUESTRA_MENU = 'left>FishApp'
+    ORQUESTRA_MENU = "left>FishApp"
     ORQUESTRA_MENU_ORDER = 1
-    ORQUESTRA_MENU_ICON = 'cog'
+    ORQUESTRA_MENU_ICON = "cog"
 
     @classmethod
     def has_permissions(cls, user):

@@ -74,10 +74,10 @@ class FishForm(ModelFormWidget):
                 "provide more details. Use the <b>Comments</b> field below for "
                 "private notes.",
                 ("line_description", "comments"),
-            ),
+            )
         ]
         if self.object_pk:  # editing existing object
-            default += [("maintainer", "ownership", "created", "modified"),]
+            default += [("maintainer", "ownership", "created", "modified")]
 
         return default
 
@@ -129,10 +129,10 @@ class FishForm(ModelFormWidget):
 
 class FishApp(ModelAdminWidget):
 
-    UID = 'fishdb'
+    UID = "fishdb"
     MODEL = Fish
 
-    TITLE = 'Fish'
+    TITLE = "Fish"
 
     EDITFORM_CLASS = FishForm
 
@@ -175,9 +175,9 @@ class FishApp(ModelAdminWidget):
     USE_DETAILS_TO_EDIT = False  # required to have form in NEW_TAB
 
     LAYOUT_POSITION = conf.ORQUESTRA_HOME
-    ORQUESTRA_MENU = 'left'
+    ORQUESTRA_MENU = "left"
     ORQUESTRA_MENU_ORDER = 3
-    ORQUESTRA_MENU_ICON = 'tint blue'
+    ORQUESTRA_MENU_ICON = "tint blue"
 
     @classmethod
     def has_permissions(cls, user):
@@ -185,7 +185,7 @@ class FishApp(ModelAdminWidget):
             return True
 
         if user.memberships.filter(
-                group__accesses__animaldb=cls.MODEL._meta.app_label
+            group__accesses__animaldb=cls.MODEL._meta.app_label
         ).exists():
             return True
 
@@ -207,10 +207,10 @@ class FishApp(ModelAdminWidget):
         return tuple([toolbar] + ["_inhouse_filter"])
 
     def get_queryset(self, request, qs):
-            if self._inhouse_filter.value:
-                qs = qs.filter(origin__exact="")
+        if self._inhouse_filter.value:
+            qs = qs.filter(origin__exact="")
 
-            return qs
+        return qs
 
     def get_related_field_queryset(self, request, list_queryset, field, queryset):
         animaldb = self.model._meta.app_label

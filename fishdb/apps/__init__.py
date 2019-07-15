@@ -9,6 +9,7 @@ class FishDBConfig(AppConfig):
         from .fish import FishApp
         from .species import FishSpeciesApp
         from .categories import FishCategoryApp
+
         # from .locations import FishLocationApp
 
         global FishApp
