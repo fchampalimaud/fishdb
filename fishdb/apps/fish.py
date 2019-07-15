@@ -90,18 +90,42 @@ class FishForm(ModelFormWidget):
 
         if access_level in ("superuser", "admin"):
             pass
-        elif access_level in ("manager",) and self.model_object.ownership == user.get_group():
+        elif access_level in ("manager",) and self._object_belongs_to_user_group():
             default += ["ownership"]
         else:
             default += ["maintainer", "ownership"]
 
         return default
 
+    def update_object_fields(self, obj):
+        obj = super().update_object_fields(obj)
+
+        if obj._state.adding:
+            user = PyFormsMiddleware.user()
+            access_level = user.get_access_level(self.model._meta.app_label)
+
+            if access_level in ("manager", "basic"):
+                obj.ownership = user.get_group()
+
+            if access_level == "basic":
+                obj.maintainer = user
+
+        return obj
+
     def get_related_field_queryset(self, field, queryset):
         animaldb = self.model._meta.app_label
         queryset = limit_choices_to_database(animaldb, field, queryset)
         return queryset
 
+    def _object_belongs_to_user_group(self):
+        """
+        Returns True if the object being edited using the form belongs
+        to the current user.
+        """
+        if self.model_object:
+            user = PyFormsMiddleware.user()
+            return self.model_object.ownership == user.get_group()
+        return False
 
 class FishApp(ModelAdminWidget):
 
