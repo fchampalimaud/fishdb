@@ -11,17 +11,6 @@ from ._utils import FormPermissionsMixin
 from ._utils import limit_choices_to_database
 
 
-ORIGIN_HELP_TAG = """
-<span
-    data-inverted=""
-    data-tooltip="Leave blank for in-house generated lines"
-    data-position="top center"
->
-    <i class="help link teal icon"></i>
-</span>
-"""
-
-
 class FishForm(FormPermissionsMixin, ModelFormWidget):
 
     CLOSE_ON_REMOVE = True
@@ -30,8 +19,6 @@ class FishForm(FormPermissionsMixin, ModelFormWidget):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-        self.origin.label += ORIGIN_HELP_TAG
 
         self.quarantine.checkbox_type = ""
         self.quarantine.label_visible = False
