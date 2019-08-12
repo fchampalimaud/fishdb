@@ -4,6 +4,7 @@ from model_utils import Choices
 
 from fishdb.querysets import FishQuerySet
 
+
 class AbstractFish(models.Model):
     """
     Must be compatible with Congento model scheme!
@@ -25,8 +26,12 @@ class AbstractFish(models.Model):
     # Specific fields for this animal model
     strain_name = models.CharField(max_length=255)
     common_name = models.CharField(max_length=50, blank=True)
-    species = models.ForeignKey(to='fishdb.Species', on_delete=models.PROTECT, related_name='fish')
-    category = models.ForeignKey(to='fishdb.Category', on_delete=models.PROTECT, related_name='fish')
+    species = models.ForeignKey(
+        to="fishdb.Species", on_delete=models.PROTECT, related_name="fish"
+    )
+    category = models.ForeignKey(
+        to="fishdb.Category", on_delete=models.PROTECT, related_name="fish"
+    )
     background = models.CharField(max_length=30)
     genotype = models.CharField(max_length=30)
     phenotype = models.CharField(max_length=30)
@@ -59,8 +64,12 @@ class Fish(AbstractFish):
     public = models.BooleanField(verbose_name="Public through Congento", default=False)
 
     # TODO test and fix the two ownership fields
-    maintainer = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True, blank=True)
-    ownership = models.ForeignKey(to="users.Group", on_delete=models.PROTECT, null=True, blank=True)
+    maintainer = models.ForeignKey(
+        to=settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True, blank=True
+    )
+    ownership = models.ForeignKey(
+        to="users.Group", on_delete=models.PROTECT, null=True, blank=True
+    )
 
     line_number = models.PositiveIntegerField(null=True, blank=True)
     # location = models.ForeignKey(to='fishdb.Location', on_delete=models.PROTECT, related_name='fish')

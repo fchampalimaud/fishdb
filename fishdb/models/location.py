@@ -6,12 +6,13 @@ class Location(models.Model):
     Replaced with a BooleanField to simply track quarantined lines.
     May be reintroduced in the future to manage rooms, cages, systems, etc.
     """
+
     name = models.CharField(max_length=80)
 
     class Meta:
-        verbose_name = 'location'
-        verbose_name_plural = 'locations'
-        ordering = ['name']
+        verbose_name = "location"
+        verbose_name_plural = "locations"
+        ordering = ["name"]
 
     def __str__(self):
         return self.name

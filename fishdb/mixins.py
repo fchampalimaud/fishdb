@@ -14,7 +14,9 @@ class PyformsPermissionsMixin:
         if access_level in ("superuser", "admin"):
             return True
         elif access_level in ("manager",):
-            groups_managed_by_user = user.memberships.filter(is_manager=True).values("group")
+            groups_managed_by_user = user.memberships.filter(is_manager=True).values(
+                "group"
+            )
             return self.filter(ownership__in=groups_managed_by_user)
         elif access_level in ("basic",):
             return self.filter(maintainer=user)
