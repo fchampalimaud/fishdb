@@ -14,7 +14,7 @@ setup(
     description="zebrafish database",
     long_description=README,
     long_description_content_type="text/markdown",
-    url="https://bitbucket.org/fchampalimaud/fishdb",
+    url="https://github.com/fchampalimaud/fishdb",
     author=["Hugo Cachitas"],
     author_email=["hugo.cachitas@research.fchampalimaud.org"],
     classifiers=[
