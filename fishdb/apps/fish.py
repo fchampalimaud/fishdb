@@ -7,8 +7,9 @@ from pyforms_web.widgets.django import ModelFormWidget
 
 from fishdb.models import Fish
 
-from ._utils import FormPermissionsMixin
-from ._utils import limit_choices_to_database
+from users.apps._utils import FormPermissionsMixin
+from users.apps._utils import limit_choices_to_database
+# FIXME import this when users model is not present
 
 
 class FishForm(FormPermissionsMixin, ModelFormWidget):
