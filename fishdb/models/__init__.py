@@ -1,4 +1,4 @@
-from .fish import AbstractFish, Fish
+from .fish import Fish
 from .species import Species
 from .category import Category
 from .location import Location
