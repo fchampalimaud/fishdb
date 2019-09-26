@@ -81,7 +81,6 @@ class Fish(models.Model):
         return self.strain_name
 
     def get_origin(self):
-        # FIXME get correct isntitution name after from configuration (settings or DB)
-        return self.origin or getattr(settings, "INSTITUTION_NAME", "in-house")
+        return self.origin or "in-house"
 
     get_origin.short_description = "Origin"
