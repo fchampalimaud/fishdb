@@ -110,10 +110,12 @@ class FishApp(ModelAdminWidget):
 
     USE_DETAILS_TO_EDIT = False  # required to have form in NEW_TAB
 
+    STATIC_FILES = ['fishdb/icon.css']  # required for the menu icon CSS
+
     LAYOUT_POSITION = conf.ORQUESTRA_HOME
     ORQUESTRA_MENU = "left"
     ORQUESTRA_MENU_ORDER = 3
-    ORQUESTRA_MENU_ICON = "tint blue"
+    ORQUESTRA_MENU_ICON = "large congento-fish"
 
     @classmethod
     def has_permissions(cls, user):
