@@ -1,15 +1,76 @@
 from confapp import conf
-from pyforms.controls import ControlCheckBox
+from django.views import View
+from pyforms.controls import ControlCheckBox, ControlButton, ControlFileUpload
+from pyforms_web.basewidget import BaseWidget
 from pyforms_web.organizers import no_columns, segment
 from pyforms_web.web.middleware import PyFormsMiddleware
 from pyforms_web.widgets.django import ModelAdminWidget
 from pyforms_web.widgets.django import ModelFormWidget
 
 from fishdb.models import Fish
+from fishdb.admin import FishResource
 
 from users.apps._utils import FormPermissionsMixin
 from users.apps._utils import limit_choices_to_database
+from django.shortcuts import redirect
+from tablib.core import Dataset, UnsupportedFormat
+import os
 # FIXME import this when users model is not present
+
+
+class FishImportWidget(BaseWidget):
+    TITLE = 'Import Fish'   
+    
+    LAYOUT_POSITION = conf.ORQUESTRA_NEW_WINDOW
+    CREATE_BTN_LABEL = '<i class="upload icon"></i>Import'
+    HAS_CANCEL_BTN_ON_ADD = False
+
+    def __init__(self, *args, **kwargs):
+        super().__init__()
+
+        self._csv_file = ControlFileUpload(label='Import CSV')
+        self._import_btn = ControlButton(
+            '<i class="upload icon"></i>Import',
+            default=self.__import_evt,
+            label_visible=False,
+            css='basic blue',
+            helptext='Import Fish from CSV file',
+        )
+
+        self.formset = [
+            '_csv_file',
+            '_import_btn'
+        ]
+
+    def __import_evt(self):
+
+        fish_resource = FishResource()
+
+        if self._csv_file.filepath is not None:
+            dataset = Dataset()
+
+            try:
+                with open(self._csv_file.filepath, 'r') as f:
+                    imported_file = dataset.load(f.read())
+            except UnsupportedFormat as uf:
+                raise Exception("Unsupported format. Please select a CSV file with the Fish template columns")
+
+            # Test the import first
+            result = fish_resource.import_data(dataset, dry_run=True, use_transactions=True, collect_failed_rows=True)
+            if result.has_validation_errors():
+                val_errors = ''
+                for err in result.invalid_rows:
+                    val_errors += f'row {err.number}:<br><ul>'
+                    for key in err.field_specific_errors:
+                        val_errors += f'<li>{key} &rarr; {err.field_specific_errors[key][0]}</li>'
+                    val_errors += '</ul>'
+                raise Exception(f"Validation error(s) on row(s): {', '.join([str(err.number) for err in result.invalid_rows])} <br>{val_errors}")
+            elif result.has_errors():
+                raise Exception(f"Error detected that prevents importing on row(s): {', '.join([str(num) for num, _ in result.row_errors()])}")
+            else:
+                fish_resource.import_data(dataset, dry_run=False, use_transactions=True)
+            
+            self.success("Fish file imported successfully!")
 
 
 class FishForm(FormPermissionsMixin, ModelFormWidget):
