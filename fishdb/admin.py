@@ -14,6 +14,8 @@ class FishResource(resources.ModelResource):
     class Meta:
         model = Fish
         skip_unchanged = True
+        report_skipped = True
+        clean_model_instances = True
 
 class FishAdmin(ImportMixin, ExportActionMixin, admin.ModelAdmin):
     resource_class = FishResource
