@@ -63,6 +63,8 @@ class FishImportWidget(BaseWidget):
                     val_errors += f'row {err.number}:<br><ul>'
                     for key in err.field_specific_errors:
                         val_errors += f'<li>{key} &rarr; {err.field_specific_errors[key][0]}</li>'
+                    for val in err.non_field_specific_errors:
+                        val_errors += f'<li>Non field specific &rarr; {val}</li>'
                     val_errors += '</ul>'
                 raise Exception(f"Validation error(s) on row(s): {', '.join([str(err.number) for err in result.invalid_rows])} <br>{val_errors}")
             elif result.has_errors():
