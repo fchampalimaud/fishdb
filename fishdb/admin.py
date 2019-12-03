@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.conf import settings
 from import_export import resources, widgets
 from import_export.admin import ExportActionMixin, ImportMixin
 from import_export.fields import Field
@@ -6,12 +7,15 @@ from import_export.widgets import ForeignKeyWidget
 
 from . import models
 from .models import Fish, Category, Species
+from users.models import Group
 
 
 class FishResource(resources.ModelResource):
     category = Field(attribute='category', column_name='category', widget=ForeignKeyWidget(Category, 'name'))
     species = Field(attribute='species', column_name='species', widget=ForeignKeyWidget(Species, 'name'))
-    #TODO maintainer and ownership FKs missing
+    maintainer = Field(attribute='maintainer', column_name='maintainer', widget=ForeignKeyWidget(settings.AUTH_USER_MODEL, 'name'))
+    ownership = Field(attribute='ownership', column_name='ownership', widget=ForeignKeyWidget(Group, 'name'))
+    
     class Meta:
         model = Fish
         skip_unchanged = True
