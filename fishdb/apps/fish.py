@@ -15,6 +15,8 @@ from users.apps._utils import limit_choices_to_database
 from django.shortcuts import redirect
 from tablib.core import Dataset, UnsupportedFormat
 import os
+import shutil
+from os.path import dirname
 # FIXME import this when users model is not present
 
 
@@ -54,6 +56,8 @@ class FishImportWidget(BaseWidget):
                     imported_file = dataset.load(f.read())
             except UnsupportedFormat as uf:
                 raise Exception("Unsupported format. Please select a CSV file with the Fish template columns")
+            finally:
+                shutil.rmtree(dirname(self._csv_file.filepath))
 
             # Test the import first
             result = fish_resource.import_data(dataset, dry_run=True, use_transactions=True, collect_failed_rows=True)
