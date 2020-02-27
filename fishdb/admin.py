@@ -8,12 +8,13 @@ from import_export.widgets import ForeignKeyWidget
 from . import models
 from .models import Fish, Category, Species
 from users.models import Group
+from django.contrib.auth import get_user_model
 
 
 class FishResource(resources.ModelResource):
     category = Field(attribute='category', column_name='category', widget=ForeignKeyWidget(Category, 'name'))
     species = Field(attribute='species', column_name='species', widget=ForeignKeyWidget(Species, 'name'))
-    maintainer = Field(attribute='maintainer', column_name='maintainer', widget=ForeignKeyWidget(settings.AUTH_USER_MODEL, 'name'))
+    maintainer = Field(attribute='maintainer', column_name='maintainer', widget=ForeignKeyWidget(get_user_model(), 'name'))
     ownership = Field(attribute='ownership', column_name='ownership', widget=ForeignKeyWidget(Group, 'name'))
     
     class Meta:
