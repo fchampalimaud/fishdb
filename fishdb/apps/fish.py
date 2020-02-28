@@ -18,7 +18,7 @@ import os
 import shutil
 from os.path import dirname
 # FIXME import this when users model is not present
-
+from django.urls import reverse
 
 class FishImportWidget(BaseWidget):
     TITLE = 'Import Fish'   
@@ -213,11 +213,21 @@ class FishApp(ModelAdminWidget):
             helptext='Import Fish from CSV file',
         )
 
+        url = reverse('get_fish_template')
+
+        self._download_btn = ControlButton(
+            '<i class="download icon"></i>Template',
+            default='window.open("{0}");'.format(url),
+            label_visible=False,
+            css="basic blue",
+            helptext="Download Fish template as a CSV file",
+        )
+
         super().__init__(*args, **kwargs)
 
     def get_toolbar_buttons(self, has_add_permission=False):
         toolbar = super().get_toolbar_buttons(has_add_permission)
-        return tuple([no_columns(toolbar, "_import_btn")] + [" ", "_inhouse_filter"])
+        return tuple([no_columns(toolbar, "_import_btn", "_download_btn")] + [" ", "_inhouse_filter"])
 
     def get_queryset(self, request, qs):
         if self._inhouse_filter.value:
