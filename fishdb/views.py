@@ -14,9 +14,11 @@ def get_fish_template(request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="fish_template.csv"'
 
-    csv_list = dataset.csv.rstrip().split(',')
-
-    writer = csv.writer(response)
-    writer.writerow(csv_list)
+    if dataset.csv:
+        header = dataset.csv.splitlines()
+        if len(header) > 0:
+            csv_list = header[0].split(',')
+            writer = csv.writer(response)
+            writer.writerow(csv_list)
 
     return response
