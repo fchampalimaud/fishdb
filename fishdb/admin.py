@@ -21,6 +21,11 @@ class FishResource(resources.ModelResource):
         model = Fish
         skip_unchanged = True
         clean_model_instances = True
+        exclude = ('id', 'created', 'modified')
+        export_order = ('species', 'category', 'strain_name', 'common_name', 'line_number', 'background', 
+                        'genotype', 'phenotype', 'origin',
+                        'availability', 'link', 'quarantine', 'mta', 'public', 'line_description', 'comments',
+                        'maintainer', 'ownership')
 
 class FishAdmin(ImportMixin, ExportActionMixin, admin.ModelAdmin):
     resource_class = FishResource
