@@ -21,6 +21,7 @@ class FishResource(resources.ModelResource):
         model = Fish
         skip_unchanged = True
         clean_model_instances = True
+        exclude = ('id', 'created', 'modified')
 
 class FishAdmin(ImportMixin, ExportActionMixin, admin.ModelAdmin):
     resource_class = FishResource
