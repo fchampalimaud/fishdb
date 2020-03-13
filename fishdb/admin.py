@@ -28,12 +28,13 @@ class FishResource(resources.ModelResource):
         for field, value in row.items():
             if field in self._date_fields:
                 # check if the value is a float and convert to datetime here
+                tz = timezone.get_current_timezone()
                 if isinstance(value, float):
                     import xlrd
-                    row[field] = datetime(*xlrd.xldate_as_tuple(value, 0), tzinfo=timezone.get_current_timezone())
+                    row[field] = tz.localize(datetime(*xlrd.xldate_as_tuple(value, 0)))
                 elif isinstance(value, datetime):
                     # we need to add the timezone to the datetime
-                    row[field] = value.replace(tzinfo=timezone.get_current_timezone()).astimezone(tz=timezone.get_current_timezone())
+                    row[field] = tz.localize(value)
             if value is None:
                 # check default value for this field within the model and set it in the row value before proceeding
                 try:
@@ -42,7 +43,7 @@ class FishResource(resources.ModelResource):
                     continue
                 if f.blank is True and f.null is False:
                     row[field] = ''
-                pass 
+
         return super().before_import_row(row, **kwargs)
 
 class FishAdmin(ImportMixin, ExportActionMixin, admin.ModelAdmin):
