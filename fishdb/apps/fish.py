@@ -51,16 +51,20 @@ class FishImportWidget(BaseWidget):
 
         fish_resource = FishResource()
 
-        if self._csv_file.filepath is not None:
-            dataset = Dataset()
+        path = self._csv_file.filepath
+        _, file_extension = os.path.splitext(path)
 
+        if path and (path.endswith('.csv') or path.endswith('.xls') or path.endswith('.xlsx')):
             try:
-                with open(self._csv_file.filepath, 'r') as f:
-                    imported_file = dataset.load(f.read())
+                with open(self._csv_file.filepath, 'r' if file_extension == '.csv' else 'rb' ) as f:
+                    dataset = tablib.import_set(f.read(), format=file_extension[1:])
             except UnsupportedFormat as uf:
-                raise Exception("Unsupported format. Please select a CSV file with the Fish template columns")
+                raise Exception(
+                    "Unsupported format. Please select a CSV in UTF-8, XLS or XLSX file with the Fish template columns"
+                )
             finally:
                 shutil.rmtree(dirname(self._csv_file.filepath))
+
 
             # Test the import first
             result = fish_resource.import_data(dataset, dry_run=True, use_transactions=True, collect_failed_rows=True)
