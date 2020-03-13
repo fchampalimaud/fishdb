@@ -16,9 +16,12 @@ from django.shortcuts import redirect
 from tablib.core import Dataset, UnsupportedFormat
 import os
 import shutil
+import logging
 from os.path import dirname
 # FIXME import this when users model is not present
 from django.urls import reverse
+
+logger = logging.getLogger(__name__)
 
 class FishImportWidget(BaseWidget):
     TITLE = 'Import Fish'   
@@ -61,22 +64,44 @@ class FishImportWidget(BaseWidget):
 
             # Test the import first
             result = fish_resource.import_data(dataset, dry_run=True, use_transactions=True, collect_failed_rows=True)
-            if result.has_validation_errors():
-                val_errors = ''
-                for err in result.invalid_rows:
-                    val_errors += f'row {err.number}:<br><ul>'
-                    for key in err.field_specific_errors:
-                        val_errors += f'<li>{key} &rarr; {err.field_specific_errors[key][0]}</li>'
-                    for val in err.non_field_specific_errors:
-                        val_errors += f'<li>Non field specific &rarr; {val}</li>'
-                    val_errors += '</ul>'
-                raise Exception(f"Validation error(s) on row(s): {', '.join([str(err.number) for err in result.invalid_rows])} <br>{val_errors}")
-            elif result.has_errors():
-                raise Exception(f"Error detected that prevents importing on row(s): {', '.join([str(num) for num, _ in result.row_errors()])}")
+            if result.has_errors():
+                import itertools
+                MAX_ERRORS_SHOWN = 3
+                val_errors = ""
+                errors_msg = ""
+                user_msg = ""
+
+                # gather all normal errors
+                row_errors = result.row_errors()
+                for row in itertools.islice(row_errors, MAX_ERRORS_SHOWN):
+                    err_lst = row[1]
+                    for err in err_lst:
+                        errors_msg += f"<li>Row #{row[0] - 1} &rarr; {str(err.error)}</li>"
+                
+                if len(errors_msg) > 0:
+                    errors_msg = f"<ul>{errors_msg}</ul>"
+
+                # gather all validation errors
+                if result.has_validation_errors():
+                    for err in itertools.islice(result.invalid_rows, MAX_ERRORS_SHOWN):
+                        val_errors += f"Row #{err.number - 1}:<br><ul>"
+                        for key in err.field_specific_errors:
+                            val_errors += (
+                                f"<li>{key} &rarr; {err.field_specific_errors[key][0]}</li>"
+                            )
+                        for val in err.non_field_specific_errors:
+                            val_errors += f"<li>Non field specific &rarr; {val}</li>"
+                        val_errors += "</ul>"
+
+                if len(errors_msg) > 0:
+                    user_msg += f"Errors detected that prevents importing on row(s):<br>{errors_msg}"
+                if len(val_errors) > 0:
+                    user_msg += f"Validation error(s) on row(s):<br>{val_errors}"
+                logger.error(user_msg)
+                raise Exception(user_msg)
             else:
                 fish_resource.import_data(dataset, dry_run=False, use_transactions=True)
-            
-            self.success("Fish file imported successfully!")
+                self.success("Fish file imported successfully!")
 
 
 class FishForm(FormPermissionsMixin, ModelFormWidget):
