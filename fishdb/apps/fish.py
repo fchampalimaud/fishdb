@@ -34,7 +34,7 @@ class FishImportWidget(BaseWidget):
     def __init__(self, *args, **kwargs):
         super().__init__()
 
-        self._csv_file = ControlFileUpload(label='Import CSV')
+        self._csv_file = ControlFileUpload(label="Select file (CSV in UTF-8, XLS or XLSX)", helptext="Supported formats: CSV in UTF-8, XLS or XLSX")
         self._import_btn = ControlButton(
             '<i class="upload icon"></i>Import',
             default=self.__import_evt,
