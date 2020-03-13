@@ -1,5 +1,7 @@
 from django.contrib import admin
+from django.utils import timezone
 from django.conf import settings
+from django.core.exceptions import FieldDoesNotExist
 from import_export import resources, widgets
 from import_export.admin import ExportActionMixin, ImportMixin
 from import_export.fields import Field
@@ -21,6 +23,27 @@ class FishResource(resources.ModelResource):
         model = Fish
         skip_unchanged = True
         clean_model_instances = True
+    
+    def before_import_row(self, row, **kwargs):
+        for field, value in row.items():
+            if field in self._date_fields:
+                # check if the value is a float and convert to datetime here
+                if isinstance(value, float):
+                    import xlrd
+                    row[field] = datetime(*xlrd.xldate_as_tuple(value, 0), tzinfo=timezone.get_current_timezone())
+                elif isinstance(value, datetime):
+                    # we need to add the timezone to the datetime
+                    row[field] = value.replace(tzinfo=timezone.get_current_timezone()).astimezone(tz=timezone.get_current_timezone())
+            if value is None:
+                # check default value for this field within the model and set it in the row value before proceeding
+                try:
+                    f = self._meta.model._meta.get_field(field)
+                except FieldDoesNotExist:
+                    continue
+                if f.blank is True and f.null is False:
+                    row[field] = ''
+                pass 
+        return super().before_import_row(row, **kwargs)
 
 class FishAdmin(ImportMixin, ExportActionMixin, admin.ModelAdmin):
     resource_class = FishResource
