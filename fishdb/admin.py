@@ -16,7 +16,7 @@ from django.contrib.auth import get_user_model
 class FishResource(resources.ModelResource):
     category = Field(attribute='category', column_name='category', widget=ForeignKeyWidget(Category, 'name'))
     species = Field(attribute='species', column_name='species', widget=ForeignKeyWidget(Species, 'name'))
-    maintainer = Field(attribute='maintainer', column_name='maintainer', widget=ForeignKeyWidget(get_user_model(), 'name'))
+    maintainer = Field(attribute='maintainer', column_name='maintainer', widget=ForeignKeyWidget(get_user_model(), 'email'))
     ownership = Field(attribute='ownership', column_name='ownership', widget=ForeignKeyWidget(Group, 'name'))
     
     class Meta:
