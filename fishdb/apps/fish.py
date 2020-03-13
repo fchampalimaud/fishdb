@@ -17,6 +17,7 @@ from tablib.core import Dataset, UnsupportedFormat
 import os
 import shutil
 import logging
+import tablib
 from os.path import dirname
 # FIXME import this when users model is not present
 from django.urls import reverse
@@ -106,6 +107,8 @@ class FishImportWidget(BaseWidget):
             else:
                 fish_resource.import_data(dataset, dry_run=False, use_transactions=True)
                 self.success("Fish file imported successfully!")
+        else:
+            self.alert("Input file format not recognized. Please use either CSV (UTF-8), XLS or XLSX")
 
 
 class FishForm(FormPermissionsMixin, ModelFormWidget):
