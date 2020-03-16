@@ -69,7 +69,7 @@ class FishImportWidget(BaseWidget):
 
             # Test the import first
             result = fish_resource.import_data(dataset, dry_run=True, use_transactions=True, collect_failed_rows=True)
-            if result.has_errors():
+            if result.has_errors() or result.has_validation_errors():
                 import itertools
                 MAX_ERRORS_SHOWN = 3
                 val_errors = ""
