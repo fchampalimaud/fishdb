@@ -76,6 +76,7 @@ class Fish(models.Model):
     class Meta:
         verbose_name = "fish"
         verbose_name_plural = "fish"
+        permissions = [("can_import", "Can import from XLSX")]
 
     def __str__(self):
         return self.strain_name
