@@ -264,7 +264,16 @@ class FishApp(ModelAdminWidget):
 
     def get_toolbar_buttons(self, has_add_permission=False):
         toolbar = super().get_toolbar_buttons(has_add_permission)
-        return tuple([no_columns(toolbar, "_import_btn", "_download_btn")] + [" ", "_inhouse_filter"])
+
+        user = PyFormsMiddleware.user()
+        animaldb = self.model._meta.app_label
+
+        buttons = (toolbar, "_inhouse_filter")
+
+        if user.has_perm(animaldb + ".can_import"):
+            buttons += ("_import_btn", "_download_btn")
+
+        return no_columns(*buttons)
 
     def get_queryset(self, request, qs):
         if self._inhouse_filter.value:
