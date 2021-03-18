@@ -24,9 +24,10 @@ from django.urls import reverse
 
 logger = logging.getLogger(__name__)
 
+
 class FishImportWidget(BaseWidget):
-    TITLE = 'Import Fish'   
-    
+    TITLE = 'Import Fish'
+
     LAYOUT_POSITION = conf.ORQUESTRA_NEW_WINDOW
     CREATE_BTN_LABEL = '<i class="upload icon"></i>Import'
     HAS_CANCEL_BTN_ON_ADD = False
@@ -55,14 +56,14 @@ class FishImportWidget(BaseWidget):
         path = self._csv_file.filepath
         if not path:
             raise Exception('No file selected to import. Please select a file and try again.')
-        
+
         _, file_extension = os.path.splitext(path)
 
         if path and (path.endswith('.csv') or path.endswith('.xls') or path.endswith('.xlsx')):
             try:
                 with open(self._csv_file.filepath, 'r' if file_extension == '.csv' else 'rb' ) as f:
                     dataset = tablib.import_set(f.read(), format=file_extension[1:])
-            except UnsupportedFormat as uf:
+            except UnsupportedFormat:
                 raise Exception(
                     "Unsupported format. Please select a CSV in UTF-8, XLS or XLSX file with the Fish template columns"
                 )
@@ -84,7 +85,7 @@ class FishImportWidget(BaseWidget):
                     err_lst = row[1]
                     for err in err_lst:
                         errors_msg += f"<li>Row #{row[0] - 1} &rarr; {str(err.error)}</li>"
-                
+
                 if len(errors_msg) > 0:
                     errors_msg = f"<ul>{errors_msg}</ul>"
 
